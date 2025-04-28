@@ -37,6 +37,7 @@ namespace CardGames.GameLogic
 		public Snap ()
 		{
 			_deck = new Deck ();
+   			_gameTimer = SwinGame.CreateTimer ();
 		}
 
 		/// <summary>
@@ -91,7 +92,8 @@ namespace CardGames.GameLogic
 				_started = true;
 				_deck.Shuffle ();		// Return the cards and shuffle
 
-				FlipNextCard ();		// Flip the first card...
+				FlipNextCard ();
+    				 gameTimer.Start();// Flip the first card...
 			}
 		}
 			
@@ -111,7 +113,11 @@ namespace CardGames.GameLogic
 		/// </summary>
 		public void Update()
 		{
-			//TODO: implement update to automatically slip cards!
+			if (_gameTimer.ticks > _flipTime)
+   			{
+      				_gameTimer.Reset ();
+	  			FlipNextCard ();
+			}//TODO: implement update to automatically slip cards!
 		}
 
 		/// <summary>
